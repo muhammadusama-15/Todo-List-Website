@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block content %}
+    <div class="container" style="padding:10%; width: 1000px;">
+        <h1 style="text-align: center; padding: 2%; color: blue;">Register</h1>
+        <!--Flashed Meessages-->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <p class="flash" style="color: red; text-align: center;">{{ message }}</p>  
+          {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {{render_form(form)}}
+    </div>
+{% endblock %}

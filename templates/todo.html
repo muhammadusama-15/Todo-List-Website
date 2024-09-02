@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+        <img src="static/icon.png" alt="Logo" style="width: 50px; height: 50px; margin-right: 10px;">
+        <label class="navbar-brand" href="#">TODO List</label>
+    
+        <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left: auto; margin-right: 0;">
+                <li class="nav-item">
+                    <a class="nav-link active" style="color: black;" aria-current="page" href="{{url_for('home')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" style="color: gray;" aria-current="page" href="{{url_for('log_out')}}">Log Out</a>
+                </li>
+                <li class="nav-item">
+                    <label>{{user.name}}</label>
+                    <img src="{{user.email | gravatar}}" style="border-radius: 50%"/>
+                </li>
+        </ul>
+        </div>
+    </nav>
+
+    <div style="padding: 5%; text-align: center;" >
+        {% if tasks %}
+        <div class="table">
+            <div class="row">
+                <h4 class="col 3">Title</h4>
+                <h4 class="col 3">Status</h4>
+                <h4 class="col 3">Deadline</h4>
+            </div>
+        
+            {% for task in tasks %}
+            <br>
+            <div class="row">
+                    <p class="col 3"><a href="{{url_for('show_task',title=task.title)}}">{{task.title}}</a></p>
+                    {% if task.status.title()=="Pending" %}
+                        <p class="col 3" style="color: red;"><a>{{task.status}}</a></p>
+                    {% else %}
+                        <p class="col 3" style="color: green;"><a>{{task.status}}</a></p>
+                    {% endif %}
+                    <p class="col 3"><a>{{task.deadline}}</a></p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <a type="button" class="btn btn-primary btn-lg px-4 gap-3" href="{{url_for('add_task')}}" style="margin: 20px;">Add New Task</a>
+        <a type="button" class="btn btn-secondary btn-lg px-4 gap-3" href="{{url_for('log_out')}}" style="margin: 20px;">Log Out</a>
+    </div>
+{% endblock %}
